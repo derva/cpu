@@ -40,9 +40,10 @@ def parseAssembly(ass):
     elif ass[9:12] == '$r3':
         func.append(format(3, '02b'))
 
-    return func, rs, rt, rd, off;
+    return func;
 
 a = []
+b = []
 with open(args.inputs, 'r') as file:
     # content = file.read()
     ass = ''
@@ -53,8 +54,20 @@ with open(args.inputs, 'r') as file:
             ass += line + ('\n')
     ass = remove_empty_lines(ass)
     for line in ass.split('\n'):
-        a.append("".join(parseAssembly(line)[0]))
+        a.append("".join(parseAssembly(line)))
+    for line in a:
+        hstr = '%0*X' % ((len(line)+3) //4  , int(line,2))
+        b.append(hstr)
+        #print((line[:4]))
+        #print(hex(int(line[:3], 2)))
+        #print((line[4:]))
+        #print(hex(int(line[4:], 2)))
 
-print(a)
-print("First instruction is " + str(a[0]))
-#a, b, c, d , e = parseAssembly(ass)
+with open('./machine_code.txt', 'w') as file:
+    file.write("v2.0 raw\n")
+    for instruction in b:
+        file.write(instruction + '\n')
+        
+#print("v2.0 raw")
+#for instruction in b:
+#    print(instruction)
