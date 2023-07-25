@@ -14,13 +14,13 @@ def remove_empty_lines(input_string):
 def parseAssembly(ass): 
     func, rs, rt, rd, off = [],'','','','';
     if (ass[:3] == 'ADD'):
-        func.append(format(0, '02b'))
+        func.append(format(0, '04b'))
     elif ass[:3] == 'ORR':
-        func.append(format(1, '02b'))
+        func.append(format(1, '04b'))
     elif ass[:3] == 'AND':
-        func.append(format(2, '02b'))
+        func.append(format(2, '04b'))
     elif ass[:3] == 'XOR':
-        func.append(format(3, '02b'))
+        func.append(format(3, '04b'))
 
     if ass[4:7] == '$r0':
         func.append(format(0, '02b'))
