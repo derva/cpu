@@ -58,16 +58,9 @@ with open(args.inputs, 'r') as file:
     for line in a:
         hstr = '%0*X' % ((len(line)+3) //4  , int(line,2))
         b.append(hstr)
-        #print((line[:4]))
-        #print(hex(int(line[:3], 2)))
-        #print((line[4:]))
-        #print(hex(int(line[4:], 2)))
 
 with open('./machine_code.txt', 'w') as file:
     file.write("v2.0 raw\n")
     for instruction in b:
         file.write(instruction + '\n')
-        
-#print("v2.0 raw")
-#for instruction in b:
-#    print(instruction)
+
