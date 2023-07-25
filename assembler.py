@@ -12,33 +12,33 @@ def remove_empty_lines(input_string):
     return "\n".join(non_empty_lines)
 
 def parseAssembly(ass): 
-    func, rs, rt, rd, off = [0, 0, 0, 0, 0, 0],'','','','';
+    func, rs, rt, rd, off = [],'','','','';
     if (ass[:3] == 'ADD'):
-        func[0] = 0x0
+        func.append(format(0, '02b'))
     elif ass[:3] == 'ORR':
-        func[0] = 0x1
+        func.append(format(1, '02b'))
     elif ass[:3] == 'AND':
-        func[0] = 0x2
+        func.append(format(2, '02b'))
     elif ass[:3] == 'XOR':
-        func[0] = 0x3
+        func.append(format(3, '02b'))
 
-    if ass[4:7] == '$r1':
-        func[1] = 0x1  
+    if ass[4:7] == '$r0':
+        func.append(format(0, '02b'))
+    elif ass[4:7] == '$r1':
+        func.append(format(1, '02b'))
     elif ass[4:7] == '$r2':
-        func[1] = 0x2
+        func.append(format(2, '02b'))
     elif ass[4:7] == '$r3':
-        func[1] = 0x3
-    elif ass[4:7] == '$r4':
-        func[1] = 0x4
+        func.append(format(3, '02b'))
     
-    if ass[9:12] == '$r1':
-        func[2] = 0x1  
+    if ass[9:12] == '$r0':
+        func.append(format(0, '02b'))
+    elif ass[9:12] == '$r1':
+        func.append(format(1, '02b'))
     elif ass[9:12] == '$r2':
-        func[2] = 0x2
+        func.append(format(2, '02b'))
     elif ass[9:12] == '$r3':
-        func[2] = 0x3
-    elif ass[9:12] == '$r4':
-        func[2] = 0x4
+        func.append(format(3, '02b'))
 
     return func, rs, rt, rd, off;
 
@@ -53,7 +53,8 @@ with open(args.inputs, 'r') as file:
             ass += line + ('\n')
     ass = remove_empty_lines(ass)
     for line in ass.split('\n'):
-        a.append(parseAssembly(line)[0])
+        a.append("".join(parseAssembly(line)[0]))
 
 print(a)
+print("First instruction is " + str(a[0]))
 #a, b, c, d , e = parseAssembly(ass)
